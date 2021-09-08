@@ -83,24 +83,28 @@ class ContactList extends React.Component {
       },
       {
         title: "Action",
-        dataIndex: "",
-        key: data.id,
-        render: (data) => (
-          <Space>
-            <Tooltip title="Edit Contact">
-              <EditTwoTone
-                style={{fontSize: "20px"}}
-                onClick={() => this.handleEdit(data.id)}
-              />
-            </Tooltip>
-            <Tooltip title="Delete Contact">
-              <DeleteOutlined
-                style={{fontSize: "20px", color: "red"}}
-                onClick={() => this.handleDelete(data.id)}
-              />
-            </Tooltip>
-          </Space>
-        ),
+        dataIndex: "action",
+        key: "action",
+        render: (data) => {
+          return (
+            <div>
+              <Space>
+                <Tooltip title="Edit Contact">
+                  <EditTwoTone
+                    style={{fontSize: "20px"}}
+                    onClick={() => this.handleEdit(data.id)}
+                  />
+                </Tooltip>
+                <Tooltip title="Delete Contact">
+                  <DeleteOutlined
+                    style={{fontSize: "20px", color: "red"}}
+                    onClick={() => this.handleDelete(data.id)}
+                  />
+                </Tooltip>
+              </Space>
+            </div>
+          );
+        },
       },
     ];
     return (
@@ -111,7 +115,7 @@ class ContactList extends React.Component {
             <Button type="primary">Add Contact</Button>
           </Link>
         </div>
-        <Table columns={columns} rowKey={data.id} dataSource={data} bordered />
+        <Table rowKey="id" columns={columns} dataSource={data} bordered />
         <Modal
           title="Edit Contact"
           visible={isModalVisible}
