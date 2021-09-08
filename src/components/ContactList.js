@@ -83,7 +83,7 @@ class ContactList extends React.Component {
       },
       {
         title: "Action",
-        dataIndex: "action",
+        dataIndex: "",
         key: "action",
         render: (data) => {
           return (
