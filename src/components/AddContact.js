@@ -45,7 +45,22 @@ class AddContact extends React.Component {
     const {name, email} = this.state;
     return (
       <div style={{padding: "20px", width: "50%"}}>
-        <h2> Add Contact</h2>
+        <h2>
+          {" "}
+          Add Contact
+          <Link
+            to="/"
+            style={{
+              float: "right",
+              marginTop: "10px",
+              color: "blue",
+              fontSize: "20px",
+            }}
+          >
+            Contact list
+          </Link>
+        </h2>
+
         <Form layout="vertical">
           <Form.Item
             label="Name"
@@ -92,9 +107,6 @@ class AddContact extends React.Component {
 
           {/* </Form.Item> */}
         </Form>
-        <Link to="/" style={{float: "left", marginTop: "10px"}}>
-          Contact list
-        </Link>
       </div>
     );
   }

@@ -82,6 +82,8 @@ class ContactList extends React.Component {
     if (editResult.status === 200) {
       notification.success({
         message: "Contact edited successfully",
+        style: {background: "lightgreen"},
+        placement: "bottomRight",
       });
       this.setState({isModalVisible: false});
       // console.log("edited contact", this.state);
@@ -146,7 +148,13 @@ class ContactList extends React.Component {
             <Button type="primary">Add Contact</Button>
           </Link>
         </div>
-        <Table rowKey="id" columns={columns} dataSource={data} bordered />
+        <Table
+          rowKey="id"
+          columns={columns}
+          dataSource={data}
+          bordered
+          style={{backgroundColor: "#ffffff"}}
+        />
         <Modal
           title="Edit Contact"
           visible={isModalVisible}

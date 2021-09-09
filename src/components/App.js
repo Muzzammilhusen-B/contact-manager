@@ -6,6 +6,7 @@ import ContactList from "./ContactList";
 import AddContact from "./AddContact";
 import {Switch, Route, Router} from "react-router-dom";
 import history from "./history";
+import contact from "./contact.jpg";
 
 const App = () => {
   return (
@@ -14,9 +15,10 @@ const App = () => {
         display: "flex",
         flexDirection: "column",
         height: "801px",
-
+        backgroundImage: `url(${contact})`,
         // justifyContent: "center",
         alignItems: "center",
+        opacity: 0.8,
       }}
     >
       <Router history={history}>
