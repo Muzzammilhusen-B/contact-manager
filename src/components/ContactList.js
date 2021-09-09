@@ -1,8 +1,19 @@
 import React from "react";
 import api from "./apis/contacts";
-import {Table, Button, Space, Tooltip, Modal, Form, Input} from "antd";
+import {
+  Table,
+  Button,
+  Space,
+  Tooltip,
+  Modal,
+  Form,
+  Input,
+  notification,
+  message,
+} from "antd";
 import {Link} from "react-router-dom";
 import {DeleteOutlined, EditTwoTone} from "@ant-design/icons";
+import history from "./history";
 
 class ContactList extends React.Component {
   state = {data: [], isModalVisible: false, selectedUser: []};
@@ -19,11 +30,21 @@ class ContactList extends React.Component {
   };
   //handle delete contact
   handleDelete = async (id) => {
-    await api.delete(`/contacts/${id}`);
-    const result = await this.renderContactList();
-    console.log("data", result);
-
-    this.setState({data: result});
+    const deleteRes = await api.delete(`/contacts/${id}`);
+    console.log("delete cot", deleteRes);
+    if (deleteRes.status === 200) {
+      const success = () => {
+        message.success("Contact deleted!");
+      };
+      success();
+      const result = await this.renderContactList();
+      console.log("data", result);
+      this.setState({data: result});
+    } else {
+      notification.error({
+        message: `${deleteRes.message}`,
+      });
+    }
   };
   //handle edit contact
   handleEdit = (id) => {
@@ -57,13 +78,23 @@ class ContactList extends React.Component {
       name: newName,
       email: newEmail,
     };
-    await api.patch(`/contacts/${id}`, response);
-    this.setState({isModalVisible: false});
-    // console.log("edited contact", this.state);
-    const result = await this.renderContactList();
-    console.log("data", result);
+    const editResult = await api.patch(`/contacts/${id}`, response);
+    if (editResult.status === 200) {
+      notification.success({
+        message: "Contact edited successfully",
+      });
+      this.setState({isModalVisible: false});
+      // console.log("edited contact", this.state);
+      const result = await this.renderContactList();
+      console.log("data", result);
 
-    this.setState({data: result});
+      this.setState({data: result});
+    } else {
+      notification.error({message: `404 Not Fond`});
+      this.setState({isModalVisible: false});
+
+      history.push("/");
+    }
   };
   handleCancel = () => {
     this.setState({isModalVisible: false});
@@ -83,7 +114,7 @@ class ContactList extends React.Component {
       },
       {
         title: "Action",
-        dataIndex: "action",
+        dataIndex: "",
         key: "action",
         render: (data) => {
           return (

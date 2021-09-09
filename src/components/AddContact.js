@@ -1,8 +1,9 @@
 import React from "react";
-import {Form, Input, Button} from "antd";
+import {Form, Input, Button, message} from "antd";
 import api from "./apis/contacts";
 import {v4 as uuidv4} from "uuid";
 import {Link} from "react-router-dom";
+import history from "./history";
 
 class AddContact extends React.Component {
   state = {name: "", email: "", id: ""};
@@ -24,9 +25,21 @@ class AddContact extends React.Component {
       email: email,
     };
     console.log("response", response);
-    await api.post("/contacts", response);
-    const {history} = this.props;
-    if (history) history.push("/");
+    const result = await api.post("/contacts", response);
+    if (result.status === 201) {
+      const success = () => {
+        message.success("Contact added successfully.");
+      };
+      success();
+      history.push("/"); //using creatBrowserHistory from history, in app component import Router from react-router-dom
+      // const {history} = this.props;
+      // if (history) history.push("/");
+    } else {
+      const error = () => {
+        message.error(`${result.message}`);
+      };
+      error();
+    }
   };
   render() {
     const {name, email} = this.state;

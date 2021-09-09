@@ -4,7 +4,8 @@ import HeaderBar from "./HeaderBar";
 import ContactList from "./ContactList";
 // import ContactCard from "./ContactCard";
 import AddContact from "./AddContact";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {Switch, Route, Router} from "react-router-dom";
+import history from "./history";
 
 const App = () => {
   return (
@@ -18,9 +19,9 @@ const App = () => {
         alignItems: "center",
       }}
     >
-      <HeaderBar />
+      <Router history={history}>
+        <HeaderBar />
 
-      <Router>
         <Switch>
           <Route path="/" exact component={ContactList} />
 
